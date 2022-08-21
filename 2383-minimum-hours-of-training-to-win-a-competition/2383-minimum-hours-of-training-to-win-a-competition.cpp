@@ -1,7 +1,7 @@
 class Solution {
 public:
     int minNumberOfHours(int initialEnergy, int initialExperience, vector<int>& energy, vector<int>& experience) {
-        //int total=accumulate(energy.begin(),energy.end(),0);
+        int total=accumulate(energy.begin(),energy.end(),0);
         int sum=0;
         int diff=0;
         for(int i=0;i<energy.size();i++){
@@ -13,6 +13,9 @@ public:
                 sum+=diff;
                 initialEnergy=1;
             }
+        }
+        diff=0;
+        for(int i=0;i<experience.size();i++){
             if(initialExperience>experience[i]){
                 initialExperience+=experience[i];
             }else{
@@ -20,7 +23,7 @@ public:
                 diff+=1;
                 cout<<diff<<" ";
                 sum+=diff;
-                initialExperience+=experience[i]+diff;
+                initialExperience+=diff+experience[i];
             }
         }
         return sum;

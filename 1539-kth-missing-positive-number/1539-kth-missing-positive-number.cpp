@@ -1,16 +1,15 @@
 class Solution {
 public:
     int findKthPositive(vector<int>& A, int k) {
-        int i=1 ,cnts=0,ans=-1;
-        unordered_set<int>st(A.begin(),A.end());
-        while(cnts<k){
-            if(st.find(i)==st.end()){
-                cnts++;
-                ans=i;
-                st.insert(i);
+        int l=0 ,r=A.size(),m;
+        while(r>l){
+            m=(r+l)/2;
+            if(A[m]-m-1<k){
+                l=m+1;
+            }else if(A[m]-m-1>=k){
+                r=m;
             }
-            i++;
         }
-        return ans;
+        return l+k;
     }
 };

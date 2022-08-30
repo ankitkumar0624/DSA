@@ -3,7 +3,7 @@ public:
     int subarraysWithKDistinct(vector<int>&A, int k) {
         return almost(A,k)-almost(A,k-1);
     }
-    unordered_map<int,int>mp;
+    map<int,int>mp;
     int almost(vector<int>&A ,int k){
         long long int res=0;
         int l=0,n=A.size();

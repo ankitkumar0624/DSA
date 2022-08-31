@@ -1,21 +1,36 @@
+
 class Solution {
 public:
-    TreeNode*LCA;
-    int deepest=0;
     TreeNode* lcaDeepestLeaves(TreeNode* root) {
-        int x=helper(root,0);
-        return LCA;
+        vector<int>D;
+        queue<TreeNode*>q;
+        q.push(root);
+        while(!q.empty()){
+            int n=q.size();
+            D.clear();
+            for(int i=0;i<n;i++){
+                TreeNode*cur=q.front();q.pop();
+                D.push_back(cur->val);
+                if(cur->left!=NULL)q.push(cur->left);
+                if(cur->right!=NULL)q.push(cur->right);
+            }
+        }
+        int p1=D.front() ,p2=D.back();
+        TreeNode*head=LCA(root,p1,p2);
+        return head;
     }
-    int helper(TreeNode*root ,int depth){
-        deepest=max(deepest,depth);
-        if(root==NULL){
-            return depth;
+    TreeNode*LCA(TreeNode*root ,int p1 ,int p2){
+        if(root==NULL) return NULL;
+        if(root->val==p1 || root->val==p2){
+            return root;
         }
-        int left=helper(root->left,depth+1);
-        int right=helper(root->right,depth+1);
-        if(left==deepest&&right==deepest){
-            LCA=root;
+        TreeNode*l=LCA(root->left,p1,p2);
+        TreeNode*r=LCA(root->right,p1,p2);
+        if(l!=NULL&&r!=NULL){
+            return root;
+        }else if(l!=NULL){
+            return l;
         }
-        return max(left,right);
+        return r;
     }
 };

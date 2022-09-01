@@ -1,23 +1,18 @@
 class Solution {
 public:
     int longestPalindrome(string s) {
+        unordered_map<char,int>mp;
+        for(auto i:s)mp[i]++;
         int len=0;
         vector<int>odd;
-        unordered_map<char,int>mp;
-        for(auto x:s)mp[x]++;
-        for(auto x:mp){
-            if(x.second%2==0){
-                len+=x.second;
-            }else{
-                odd.push_back(x.second);
-            }
+        for(auto i:mp){
+            if(i.second%2==0)len+=i.second;
+            else odd.push_back(i.second);
         }
         sort(odd.begin(),odd.end());
-        if(odd.size()>0)len+=odd[0];
-        for(int i=1;i<odd.size();i++){
-            if(odd[i]-1!=0){
-                len+=odd[i]-1;
-            }
+        if(odd.size()>=1){
+            len+=odd[0];
+            for(int i=1;i<odd.size();i++)len+=odd[i]-1;
         }
         return len;
     }

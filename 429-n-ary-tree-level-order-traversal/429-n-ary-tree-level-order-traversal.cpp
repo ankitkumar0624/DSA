@@ -1,17 +1,21 @@
 class Solution {
 public:
-    vector<vector<int>>ans;
     vector<vector<int>> levelOrder(Node* root) {
-        dfs(root,0);
-        return ans;
-    }
-    void dfs(Node*root ,int level){
-        if(root==NULL)return ;
-        if(level==ans.size())ans.emplace_back();
-        ans[level].push_back(root->val);
-        for(Node*child:root->children){
-            dfs(child,level+1);
+        vector<vector<int>>ans;
+        if(root==NULL) return ans;
+        queue<Node*>q;
+        q.push(root);
+        while(!q.empty()){
+            ans.emplace_back();
+            int n=q.size();
+            for(int i=n;i>=1;i--){
+                Node*cur=q.front();q.pop();
+                ans.back().push_back(cur->val);
+                for(Node*child:cur->children){
+                    q.push(child);
+                }
+            }
         }
-        return ;
+        return ans;
     }
 };

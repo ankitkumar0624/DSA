@@ -1,5 +1,4 @@
-SELECT person.firstname ,person.lastName ,Address.city ,Address.state
+SELECT person.firstname,person.lastname,address.city,Address.state
 FROM person
 LEFT JOIN Address
-ON person.personId=Address.personId;
-
+USING (personId);

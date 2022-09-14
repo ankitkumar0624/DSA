@@ -1,8 +1,10 @@
 class Solution {
 public:
     int cnts=0;
+    long long int sum=0;
     int pathSum(TreeNode* root, int k) {
         if(root){
+            sum=0;
             DFS(root,k);
             pathSum(root->left,k);
             pathSum(root->right,k);
@@ -11,9 +13,11 @@ public:
     }
     void DFS(TreeNode*root,long long int k){
         if(!root) return ;
-        if(k==root->val)cnts++;
-        DFS(root->left,k-root->val);
-        DFS(root->right,k-root->val);
+        sum+=root->val;
+        if(sum==k)cnts++;
+        DFS(root->left,k);
+        DFS(root->right,k);
+        sum-=root->val;
         return ;
     }
 };

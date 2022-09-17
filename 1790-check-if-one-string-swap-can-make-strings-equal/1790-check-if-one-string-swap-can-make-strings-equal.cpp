@@ -1,15 +1,16 @@
 class Solution {
 public:
     bool areAlmostEqual(string s1, string s2) {
-        if(s1==s2)return true;
-        string p=s1,q=s2;
-        sort(p.begin(),p.end());
-        sort(q.begin(),q.end());
-        if(p!=q)return false;
-        int cnt=0;
+        int cnts=0;
+        vector<int>v1(26,0);
+        vector<int>v2(26,0);
+        for(auto i:s1)v1[i-'a']++;
+        for(auto i:s2)v2[i-'a']++;
+        if(v1!=v2)return false;
         for(int i=0 ;i<s1.size();i++){
-            if(s1[i]!=s2[i])cnt++;
+            if(s1[i]!=s2[i])cnts++;
         }
-        return cnt==2;
+        if(cnts==0 || cnts==2)return true;
+        return false;
     }
 };

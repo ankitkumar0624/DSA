@@ -1,32 +1,34 @@
 class Solution {
 public:
-    vector<vector<int>>graph;
-    int findCircleNum(vector<vector<int>>& A) {
-        int n=A.size();
-        graph.clear();
-        graph.resize(n+1);
-        for(int i=0 ;i<n ;i++){
-            for(int j=0 ;j<n ;j++){
-                if(A[i][j]==1)graph[i+1].push_back(j+1);
-            }
-        }
-        vector<bool>vis(n+1,false);
-        int cnt=0;
-        for(int i=1;i<=n;i++){
-            if(vis[i]==false){
-                dfs(vis,i);
-                cnt++;
-            }
-        }
-        return cnt;
+    int findpar(int node,vector<int>&par){
+        if(node==par[node]) return node;
+        return par[node]=findpar(par[node],par);
     }
-    void dfs(vector<bool>&vis,int s){
-        vis[s]=true;
-        for(auto i:graph[s]){
-            if(vis[i]==false){
-                dfs(vis,i);
-            }
+    void Union(int a, int b,vector<int>&par){
+        a=findpar(a,par);
+        b=findpar(b,par);
+        if(a!=b){
+            par[a]=b;
         }
         return ;
+    }
+    int findCircleNum(vector<vector<int>>& C){
+        int n=C.size();
+        vector<int>par(n);
+        for(int i=0 ;i<n;i++)par[i]=i;
+        
+        for(int i=0 ;i<n ;i++){
+            for(int j=i+1 ;j<n ;j++){
+                if(C[i][j]==1){
+                    Union(i,j,par);
+                }
+            }
+        }
+        for(auto i:par)cout<<i<<" ";
+        int cnts=0;
+        for(int i=0 ;i<n ;i++){
+            if(i==par[i])cnts++;
+        }
+        return cnts;
     }
 };

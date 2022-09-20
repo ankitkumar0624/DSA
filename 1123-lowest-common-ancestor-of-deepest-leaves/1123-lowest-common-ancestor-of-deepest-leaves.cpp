@@ -1,34 +1,35 @@
-
 class Solution {
 public:
     TreeNode* lcaDeepestLeaves(TreeNode* root) {
-        vector<int>D;
+        if(!root) return NULL;
         queue<TreeNode*>q;
         q.push(root);
+        vector<int>deep;
         while(!q.empty()){
             int n=q.size();
-            D.clear();
+            deep.clear();
             for(int i=0;i<n;i++){
                 TreeNode*cur=q.front();q.pop();
-                D.push_back(cur->val);
-                if(cur->left!=NULL)q.push(cur->left);
-                if(cur->right!=NULL)q.push(cur->right);
+                deep.push_back(cur->val);
+                if(cur->left)q.push(cur->left);
+                if(cur->right)q.push(cur->right);
             }
         }
-        int p1=D.front() ,p2=D.back();
-        TreeNode*head=LCA(root,p1,p2);
+        for(auto i:deep)cout<<i<<" ";
+        int p=deep.front(),q1=deep.back();
+        TreeNode*head=lca(root,p,q1);
         return head;
     }
-    TreeNode*LCA(TreeNode*root ,int p1 ,int p2){
-        if(root==NULL) return NULL;
-        if(root->val==p1 || root->val==p2){
+    TreeNode*lca(TreeNode*root,int p,int q){
+        if(!root) return NULL;
+        if(root->val==p||root->val==q){
             return root;
         }
-        TreeNode*l=LCA(root->left,p1,p2);
-        TreeNode*r=LCA(root->right,p1,p2);
-        if(l!=NULL&&r!=NULL){
+        TreeNode*l=lca(root->left,p,q);
+        TreeNode*r=lca(root->right,p,q);
+        if(l&&r){
             return root;
-        }else if(l!=NULL){
+        }else if(l){
             return l;
         }
         return r;

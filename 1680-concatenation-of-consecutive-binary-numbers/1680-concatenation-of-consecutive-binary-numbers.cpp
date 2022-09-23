@@ -1,14 +1,15 @@
 class Solution {
 public:
-    int concatenatedBinary(int n){
-        int long long  ans=0,mod=1e9+7;
+    int concatenatedBinary(int n) {
+        long ans=0,mod=1e9+7;
         for(int i=1;i<=n;i++){
-            int len=numberOfbits(i);
-            ans=((ans<<len)%mod+i)%mod;
+            int len=binaryCounts(i);
+            ans=((ans<<len)%mod+i);
+            ans%=mod;
         }
         return ans;
     }
-    int numberOfbits(int n){
-        return log2(n)+1;
+    int binaryCounts(int i){
+        return log2(i)+1;
     }
 };

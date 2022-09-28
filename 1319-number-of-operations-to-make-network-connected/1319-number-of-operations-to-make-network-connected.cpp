@@ -21,6 +21,6 @@ public:
         if(i==parent[i]){
             return parent[i];
         }
-        return find(parent,parent[i]);
+        return parent[i]=find(parent,parent[i]);
     }
 };

@@ -1,27 +1,26 @@
 class Solution {
 public:
- 	int find(int x, vector<int>& parent) {
- 		if (parent[x] == x) return parent[x];
-        return parent[x] = find(parent[x], parent);
- 	}
-    int makeConnected(int n, vector<vector<int>>& connections) {
-        vector<int> parent(n);
-        for(int i=0; i<n; i++){
-            parent[i] = i;
-        }
- 		int compo = 0;
-        for (auto& it: connections) {
- 			int x = find(it[0], parent);
- 			int y = find(it[1], parent);
-            if(x == y){
+    int makeConnected(int N, vector<vector<int>>&C) {
+        if(C.size()<N-1) return -1;
+        vector<int>parent(N);
+        for(int i=0;i<N;i++)parent[i]=i;
+        int connection=0;
+        for(auto i:C){
+            int x=find(parent,i[0]);
+            int y=find(parent,i[1]);
+            if(x==y){
                 continue;
+            }else{
+                parent[y]=x;
+                connection++;
             }
-            else {
-                parent[y] = x;
-                compo++;
-            }
- 		}
-        return connections.size() < n-1 ? -1 : n-1-compo;
+        }
+        return N-1-connection;
     }
-    
+    int find(vector<int>&parent,int i){
+        if(i==parent[i]){
+            return parent[i];
+        }
+        return find(parent,parent[i]);
+    }
 };

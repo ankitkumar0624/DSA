@@ -1,34 +1,34 @@
 class Solution {
 public:
-    int findpar(int node,vector<int>&par){
-        if(node==par[node]) return node;
-        return par[node]=findpar(par[node],par);
-    }
-    void Union(int a, int b,vector<int>&par){
-        a=findpar(a,par);
-        b=findpar(b,par);
-        if(a!=b){
-            par[a]=b;
-        }
-        return ;
-    }
-    int findCircleNum(vector<vector<int>>& C){
+    int findCircleNum(vector<vector<int>>& C) {
         int n=C.size();
-        vector<int>par(n);
-        for(int i=0 ;i<n;i++)par[i]=i;
-        
-        for(int i=0 ;i<n ;i++){
-            for(int j=i+1 ;j<n ;j++){
+        vector<int>parent(n+1);
+        for(int i=0;i<=n;i++)parent[i]=i;
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
                 if(C[i][j]==1){
-                    Union(i,j,par);
+                    int x=find(parent,i+1);
+                    int y=find(parent,j+1);
+                    if(x==y){
+                        continue;
+                    }else{
+                        parent[y]=x;
+                    }
                 }
             }
         }
-        for(auto i:par)cout<<i<<" ";
-        int cnts=0;
-        for(int i=0 ;i<n ;i++){
-            if(i==par[i])cnts++;
+        unordered_set<int>st;
+        for(int i=1;i<=n;i++){
+            int x=find(parent,parent[i]);
+            st.insert(x);
         }
-        return cnts;
+        int ans=st.size();
+        return ans;
+    }
+    int find(vector<int>&parent,int i){
+        if(i==parent[i]){
+            return parent[i];
+        }
+        return parent[i]=find(parent,parent[i]);
     }
 };

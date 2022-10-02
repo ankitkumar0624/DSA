@@ -1,19 +1,14 @@
 class Solution {
 public:
-    int mostFrequentEven(vector<int>& A) {
-        map<int,int>mp;
-        for(auto i:A){
-            if(i%2==0){
-                mp[i]++;
-            }
-        }
-        int ele=-1,fre=0;
+    int mostFrequentEven(vector<int>& nums) {
+        unordered_map<int,int>mp;
+        vector<pair<int,int>>v;
+        for(auto i:nums)if(i%2==0)mp[i]++;
         for(auto i:mp){
-            if(i.second>fre){
-                ele=i.first;
-                fre=i.second;
-            }
+            v.push_back({i.second,i.first});
         }
-        return ele;
+        if(v.size()==0)return -1;
+        sort(v.begin(),v.end(),[](pair<int,int>& a, pair<int,int>& b){if(a.first==b.first){return a.second<b.second;}           return a.first>b.first;});
+        return v[0].second;
     }
 };

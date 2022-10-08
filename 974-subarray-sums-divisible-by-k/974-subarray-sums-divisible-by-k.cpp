@@ -8,7 +8,7 @@ public:
         int n = nums.size();
         for(int i=0;i<n;i++){
             sum+=nums[i];
-            int rem = ((sum%k)+k)%k;
+            int rem = (sum%k+k)%k;
             ans+=umap[rem];
             umap[rem]++;    
         }

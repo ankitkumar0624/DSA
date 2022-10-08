@@ -6,9 +6,11 @@ public:
         int sum  = 0;
         int ans = 0;
         int n = nums.size();
+        cout<<nums[0]%k<<endl;
         for(int i=0;i<n;i++){
             sum+=nums[i];
-            int rem = (sum%k+k)%k;
+            int rem = sum%k;
+            if(rem<0) rem+=k;
             ans+=umap[rem];
             umap[rem]++;    
         }

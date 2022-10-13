@@ -1,22 +1,22 @@
-class Solution{
+class Solution {
 public:
-    int Square(int n){
-        int sum=0 ,rem;
-        while(n){
-            rem=n%10;
-            sum+=rem*rem;
-            n/=10;
+    bool isHappy(int n){
+        unordered_set<int>st;
+        int k=n;
+        while(true){
+            int sum=0 ,rem;
+            while(k){
+                rem=k%10;
+                sum+=rem*rem;
+                k/=10;
+            }
+            k=sum;
+            if(st.find(k)!=st.end()){
+                if(k==1) return 1;
+                else return 0;
+            }
+            st.insert(k);
         }
-        return sum;
-    }
-    bool isHappy(int n) {
-        int slow=n ,fast=n;
-        do{
-            slow=Square(slow);
-            fast=Square(fast);
-            fast=Square(fast);
-        }while(slow!=fast);
-        if(slow==1) return 1;
-        return 0;
+        return 1;
     }
 };
